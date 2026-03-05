@@ -20,9 +20,8 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
+        with: 
+        codex/polish-orion-x-repo-for-open-source-release-3h8axn
       - name: Install dependencies
         run: pnpm install
 
@@ -31,3 +30,28 @@ jobs:
 
       - name: Test
         run: pnpm run --if-present test
+
+      - name: Install dependencies (if workspace exists)
+        run: |
+          if [ -f package.json ]; then
+            pnpm install --frozen-lockfile || pnpm install
+          else
+            echo "No package.json found; skipping install."
+          fi
+
+      - name: Lint
+        run: |
+          if [ -f package.json ]; then
+            pnpm lint
+          else
+            echo "No package.json found; lint step intentionally skipped."
+          fi
+
+      - name: Test
+        run: |
+          if [ -f package.json ]; then
+            pnpm test
+          else
+            echo "No package.json found; test step intentionally skipped."
+          fi
+          main
