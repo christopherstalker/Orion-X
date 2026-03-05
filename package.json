@@ -1,0 +1,10 @@
+{
+  "name": "orion-x",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Open-source-ready scaffolding for Orion-X.",
+  "scripts": {
+    "lint": "sh -c \"echo lint placeholder\"",
+    "test": "sh -c \"echo no tests yet\""
+  }
+}
