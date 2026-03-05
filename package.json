@@ -1,0 +1,18 @@
+{
+  "name": "orion-x",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Workflow orchestration foundation with event-oriented execution.",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r --if-present build",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.12"
+  }
+}
