@@ -1,8 +1,8 @@
 # Contributing to Orion-X
 
-Thanks for contributing.
+Thanks for contributing! This guide helps keep changes consistent and easy to review.
 
-## Local setup
+## Development setup
 
 ```bash
 pnpm install
@@ -13,6 +13,8 @@ make dev
 
 ## Branch naming
 
+Use one of:
+
 - `feat/<short-description>`
 - `fix/<short-description>`
 - `docs/<short-description>`
@@ -20,15 +22,24 @@ make dev
 
 ## Commit style
 
-Use Conventional Commits when possible:
+Prefer Conventional Commits:
 
-- `feat: add workflow retries`
-- `fix: correct queue visibility timeout`
-- `docs: improve getting-started guide`
+- `feat: add workflow retry policy docs`
+- `fix: correct queue config parsing`
+- `docs: improve readme quickstart`
 
-## Pull request checklist
+## Pull request rules
 
-- [ ] Scope is focused and reviewable.
-- [ ] Docs updated for any behavior/interface change.
-- [ ] `make lint` and `make test` passed locally.
-- [ ] Linked issue(s) when applicable.
+- Keep PRs focused and reasonably small.
+- Include context, motivation, and testing notes.
+- Link related issues when applicable.
+- Update docs when behavior or APIs change.
+
+## Local quality checks
+
+```bash
+make lint
+make test
+```
+
+If no runtime packages are present yet, keep documentation and CI scaffolding in sync with the repository state.

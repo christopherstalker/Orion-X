@@ -1,0 +1,17 @@
+name: E2E (Scaffold)
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  e2e-scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: E2E status
+        run: |
+          echo "E2E suite is not yet implemented in this repository."
+          echo "See docs/e2e.md for implementation guidance."

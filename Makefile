@@ -1,33 +1,36 @@
-.PHONY: dev up down lint test system-check
+.PHONY: dev up down test lint
 
 dev:
-	@if pnpm run --if-present dev; then \
-		echo "dev command finished"; \
+	@if [ -f package.json ]; then \
+		pnpm dev; \
 	else \
-		echo "No dev script configured yet."; \
+		echo "No package.json found. Add workspace packages before running dev."; \
 	fi
 
 up:
 	@if [ -f docker-compose.yml ] || [ -f compose.yml ]; then \
 		docker compose up -d; \
 	else \
-		echo "No docker compose file found."; \
+		echo "No docker compose file found (docker-compose.yml or compose.yml)."; \
 	fi
 
 down:
 	@if [ -f docker-compose.yml ] || [ -f compose.yml ]; then \
 		docker compose down; \
 	else \
-		echo "No docker compose file found."; \
+		echo "No docker compose file found (docker-compose.yml or compose.yml)."; \
+	fi
+
+test:
+	@if [ -f package.json ]; then \
+		pnpm test; \
+	else \
+		echo "No package.json found. Add tests when runtime packages are added."; \
 	fi
 
 lint:
-	pnpm run --if-present lint
-
-test:
-	pnpm run --if-present test
-
-system-check:
-	pnpm run --if-present lint
-	pnpm run --if-present test
-	pnpm run --if-present build
+	@if [ -f package.json ]; then \
+		pnpm lint; \
+	else \
+		echo "No package.json found. Add lint scripts when runtime packages are added."; \
+	fi
