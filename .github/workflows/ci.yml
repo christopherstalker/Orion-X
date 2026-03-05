@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+ codex/polish-orion-x-repo-for-open-source-release
     branches: [main]
   pull_request:
 
@@ -24,8 +25,59 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with: 
+        chore/repository-scaffolding
+      - name: Install dependencies
+        run: pnpm install
+       main
+
       - name: Lint
         run: pnpm run --if-present lint
 
       - name: Test
         run: pnpm run --if-present test
+ codex/polish-orion-x-repo-for-open-source-release
+
+      - name: Install dependencies (if workspace exists)
+        run: |
+          if [ -f package.json ]; then
+            pnpm install --frozen-lockfile || pnpm install
+          else
+            echo "No package.json found; skipping install."
+          fi
+
+      - name: Lint
+        run: |
+          if [ -f package.json ]; then
+            pnpm lint
+          else
+            echo "No package.json found; lint step intentionally skipped."
+          fi
+
+      - name: Test
+        run: |
+          if [ -f package.json ]; then
+            pnpm test
+          else
+            echo "No package.json found; test step intentionally skipped."
+          fi
+          main
+         main
