@@ -21,7 +21,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with: 
-        codex/polish-orion-x-repo-for-open-source-release-3h8axn
+        chore/repository-scaffolding
       - name: Install dependencies
         run: pnpm install
 
