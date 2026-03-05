@@ -2,6 +2,29 @@ name: CI
 
 on:
   push:
+ codex/polish-orion-x-repo-for-open-source-release
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
     branches: [main, master]
   pull_request:
 
@@ -24,12 +47,14 @@ jobs:
         chore/repository-scaffolding
       - name: Install dependencies
         run: pnpm install
+       main
 
       - name: Lint
         run: pnpm run --if-present lint
 
       - name: Test
         run: pnpm run --if-present test
+ codex/polish-orion-x-repo-for-open-source-release
 
       - name: Install dependencies (if workspace exists)
         run: |
@@ -55,3 +80,4 @@ jobs:
             echo "No package.json found; test step intentionally skipped."
           fi
           main
+         main
