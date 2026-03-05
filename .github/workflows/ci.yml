@@ -20,8 +20,16 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        with: 
+        codex/polish-orion-x-repo-for-open-source-release-3h8axn
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm run --if-present lint
+
+      - name: Test
+        run: pnpm run --if-present test
 
       - name: Install dependencies (if workspace exists)
         run: |
@@ -46,3 +54,4 @@ jobs:
           else
             echo "No package.json found; test step intentionally skipped."
           fi
+          main
