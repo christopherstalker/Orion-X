@@ -1,0 +1,30 @@
+{
+  "id": "wf_demo",
+  "version": 1,
+  "description": "Example workflow for local walkthroughs",
+  "tasks": [
+    {
+      "id": "extract",
+      "type": "http",
+      "config": {
+        "url": "https://example.internal/extract"
+      }
+    },
+    {
+      "id": "transform",
+      "type": "container",
+      "needs": ["extract"],
+      "config": {
+        "image": "ghcr.io/example/transform:latest"
+      }
+    },
+    {
+      "id": "load",
+      "type": "sql",
+      "needs": ["transform"],
+      "config": {
+        "statement": "CALL load_daily_partition();"
+      }
+    }
+  ]
+}
