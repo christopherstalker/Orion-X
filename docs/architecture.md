@@ -1,32 +1,50 @@
 # Architecture
 
-Orion-X uses an event-oriented orchestration model designed for traceability and deterministic state reconstruction.
+Orion-X follows an event-oriented orchestration architecture intended to provide auditability, replayability, and scalable execution.
 
 ## Core components
 
-- **API**: accepts workflow definitions and run commands.
-- **Event Store**: append-only source of truth for state transitions.
-- **Queue**: buffers runnable task jobs.
-- **Workers**: execute jobs and emit completion/failure events.
-- **Orchestrator**: evaluates DAG readiness and dispatches eligible tasks.
-- **Projections**: maintain read models optimized for query latency.
+- **API service**: accepts workflow definitions and run requests.
+- **Event store**: append-only source of truth for state transitions.
+- **Queue**: buffers executable task jobs.
+- **Worker pool**: executes tasks and emits completion/failure events.
+- **Projection processor**: builds read models for low-latency queries.
+- **Web/clients**: consume read models via API.
 
-## Lifecycle
+## Event flow
 
-1. A run is scheduled through the API.
-2. API writes a `RunScheduled` event.
-3. Orchestrator reads state and enqueues runnable tasks.
-4. Workers process tasks and write result events.
-5. Projections update run/task read models.
+1. Client requests `RunScheduled`.
+2. API persists event to event store.
+3. Scheduler/projection determines runnable DAG nodes.
+4. Runnable nodes are enqueued.
+5. Worker executes task and emits `TaskSucceeded`/`TaskFailed`.
+6. Projection updates run status and task timelines.
+
+## Why event sourcing
+
+- Full audit log of all workflow lifecycle events.
+- Deterministic replay to rebuild projections.
+- Easier incident analysis and observability correlation.
+
+## Projection model
+
+Typical projection tables/models:
+
+- `runs` (summary status, started/finished timestamps)
+- `run_tasks` (per-task status, attempts, duration)
+- `run_events` (flattened timeline for UI)
+
+## Queue and workers
+
+Workers should support:
+
+- Visibility timeout + retries
+- Backoff policy
+- Idempotency key handling
+- Heartbeat for long-running tasks
 
 ## Consistency model
 
-- Event writes are authoritative.
+- Event store is strongly consistent for writes.
 - Read models are eventually consistent.
-- Replay from the event store can rebuild projections after faults.
-
-## Why this model
-
-- Durable audit trail for every run transition.
-- Clear separation of write path (events) and read path (projections).
-- Worker scaling can increase throughput without changing API contracts.
+- APIs should expose both current projection state and (optionally) raw event inspection.

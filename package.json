@@ -2,16 +2,9 @@
   "name": "orion-x",
   "private": true,
   "version": "0.0.0",
-  "description": "Workflow orchestration foundation with event-oriented execution.",
+  "description": "Open-source-ready scaffolding for Orion-X.",
   "scripts": {
     "lint": "sh -c \"echo lint placeholder\"",
-    "test": "sh -c \"echo no tests yet\"",
-    "build": "sh -c \"echo build placeholder\"",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "changeset publish"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^2.27.12"
+    "test": "sh -c \"echo no tests yet\""
   }
 }
